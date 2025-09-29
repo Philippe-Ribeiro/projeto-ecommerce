@@ -1,7 +1,6 @@
 .cabecalho {
     grid-area: header;
     padding: 1.8rem 0;
-
 }
 
 .cabecalho .menu-principal {
@@ -26,7 +25,6 @@
     letter-spacing: 0.1rem;
     text-decoration: none;
     padding: 1rem;
-
 }
 
 .cabecalho ul li a:hover {
@@ -52,8 +50,8 @@
 }
 
 .menu-hamburguer {
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
     background: transparent;
     border: 0;
     display: flex;
@@ -67,17 +65,15 @@
     display: block;
     height: 3px;
     width: 100%;
-    background-color: #ffffff;
-
+    background-color: var(--cor-neutra-clara);
 }
 
 .botao-carrinho {
-    background-color: transparent;
-    border: none;
-    padding: 0.75rem;
-    position: relative;
-    cursor: pointer;
-
+   background-color: transparent;
+   border: 0;
+   padding: 0.75rem;
+   position: relative;
+   cursor: pointer;
 }
 
 .botao-carrinho span {
@@ -88,13 +84,13 @@
     position: absolute;
     top: 30px;
     left: 29px;
+
     display: flex;
     width: 16px;
     height: 16px;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-
 }
 
 @media(min-width: 940px) {
@@ -108,12 +104,37 @@
         flex-direction: row;
     }
 
+    .menu-hamburguer {
+        display: none;
+    }
+
+    .cabecalho .menu-principal ul {
+        gap: 1rem;
+    }
+
+    .cabecalho ul li a {
+        font-size: 0.85rem;
+    }
+}
+
+@media(min-width: 1170px) {
+    .cabecalho {
+        max-width: 1170px;
+        margin: 0 auto;
+    }
+
+    .cabecalho .menu-principal ul {
+        gap: 2rem;
+    }
+
+    .cabecalho ul li a {
+        font-size: 1rem;
+    }
 }
 
 @media(min-width: 1440px) {
     .cabecalho {
-        max-width: 1440px;
+        max-width: 1170px;
         margin: 0 auto;
     }
 }
-
