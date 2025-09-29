@@ -1,5 +1,4 @@
 main {
-
     grid-area: main;
     padding: 1rem;
 }
@@ -12,20 +11,19 @@ main section h2 {
     margin-bottom: 2rem;
 }
 
-main .produtos ul {
-
+main section ul {
     display: flex;
     flex-direction: column;
     gap: 2rem;
 }
 
-main .produtos .produto {
+.produto {
+    background-color: var(--cor-neutra-clara);
     max-width: 368px;
     border-radius: 14px;
-
 }
 
-main .produtos img {
+.produto figure img {
     width: 100%;
     height: 334px;
     border-top-left-radius: 14px;
@@ -35,84 +33,72 @@ main .produtos img {
     object-fit: cover;
 }
 
-main .produto figcaption {
+.produto figcaption {
     background-color: var(--cor-cinza-escura);
     color: var(--cor-neutra-clara);
     font-size: 1.2rem;
-    font-weight: 600;
-    letter-spacing: 0.1rem;
+    font-weight: bold;
     padding: 1.5rem 1.5rem 1.2rem;
-
+    letter-spacing: 0.1rem;
 }
 
-main .informacoes {
-    background-color: var(--cor-cinza-escura);
-    color: var(--cor-neutra-clara);
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+.produto .informacoes {
     padding: 0 1.5rem 1.5rem;
-
+    display: grid;
+    gap: 0.5rem;
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
 }
 
-main .informacoes span {
-    color: var(--cor--cinza-clara);
-
-}
-
-main .informacoes strong {
-    color: var(--cor--cinza-clara);
+.produto .informacoes span,
+.produto .informacoes strong {
+    color: var(--cor-cinza-clara);
     font-size: 0.9rem;
     letter-spacing: 0.1rem;
 }
 
-main .informacoes .preco {
+.produto .informacoes .preco {
     font-size: 2rem;
     margin-top: 1rem;
     text-align: right;
 }
 
-main .informacoes .adicionar-ao-carrinho {
-
+.produto .adicionar-ao-carrinho {
     background-color: var(--cor-primaria);
     border: none;
     border-radius: 8px;
     color: var(--cor-neutra-clara);
+    font-size: 1rem;
     padding: 1rem;
     cursor: pointer;
     margin-top: 0.5rem;
-    transition: background-color 0.3s ease-in-out;
-
+    transition: background-color 0.3s;
 }
 
-main .informacoes .adicionar-ao-carrinho:hover {
+.produto .adicionar-ao-carrinho:hover {
     background-color: var(--cor-primaria-hover);
 }
 
+/* === TABLET === */
 @media (min-width: 769px) {
-
-
-    main .produtos .produto {
-        min-width: 368px;
-
+    main {
+        margin: 0 auto;
     }
 
-
-    main .produtos ul {
-
+    main section ul {
         flex-direction: row;
         flex-wrap: wrap;
         gap: 2rem;
     }
 }
 
-@midia (min-width: 1170px) {
+/* === DESKTOP === */
+@media (min-width: 1170px) {
     main section {
         max-width: 1170px;
-        margin: 0 auto;
-
-
-
     }
 
+    .produto {
+        width: 368px;
+    }
 }
