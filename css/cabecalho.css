@@ -108,6 +108,10 @@
         display: none;
     }
 
+    .cabecalho ul li a {
+        font-size: 0.7rem;
+    }
+
     .cabecalho .menu-principal ul {
         gap: 1rem;
     }
