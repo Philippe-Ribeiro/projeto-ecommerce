@@ -23,7 +23,9 @@ const botoesAdicionarAoCarrinho = document.querySelectorAll('.adicionar-ao-carri
 // passo 2 - adicionar um evento de escuta nesses botões pra quando clicar disparar uma ação
 botoesAdicionarAoCarrinho.forEach(botao => {
     botao.addEventListener("click", (evento) => {
+
         //passo 3 - pega as informações do produto clicado e 
+
         // adicionar ao localStorage
         const elementoProduto = evento.target.closest('.produto');
         const produtoId = elementoProduto.dataset.id;
@@ -52,6 +54,7 @@ botoesAdicionarAoCarrinho.forEach(botao => {
 
         salvarProdutosNoCarrinho(carrinho);
         atualizarContadorCarrinho();
+        renderizarTabelaCarrinho();
     });
 });
 
@@ -66,10 +69,10 @@ function obterProdutosDoCarrinho() {
 
 // passo 4 - atualizar o contador do carrinho de compras
 function atualizarContadorCarrinho() {
-    const carrinhno = obterProdutosDoCarrinho();
-    let total =0;
+    const produtos = obterProdutosDoCarrinho();
+    let total = 0;
 
-    carrinhno.forEach(produto => {
+    produtos.forEach(produto => {
         total += produto.quantidade;
     });
 
@@ -77,3 +80,27 @@ function atualizarContadorCarrinho() {
 }
 
 atualizarContadorCarrinho();
+
+// passo 5 redenrizar a tabela do carrinho de compras
+function renderizarTabelaCarrinho() {
+    const produtos = obterProdutosDoCarrinho();
+    const corpoTabela = document.querySelector('#modal-1-content table tbody');
+    if (!corpoTabela) return;
+
+    corpoTabela.innerHTML = '';
+
+    produtos.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+      
+      ${item.nome}
+      R$ ${item.preco.toFixed(2).replace('.', ',')}
+      
+      R$ ${(item.preco * item.quantidade).toFixed(2).replace('.', ',')}
+      Deletar
+    `;
+        corpoTabela.appendChild(tr);
+    });
+}
+
+renderizarTabelaCarrinho();
