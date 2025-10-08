@@ -104,3 +104,26 @@ function renderizarTabelaCarrinho() {
 }
 
 renderizarTabelaCarrinho();
+
+// objetivo 2 - remover produtos do carrinho
+// passo 1 - pegar o botão de deletar do carrinho
+const corpotabela = document.querySelector("#modal-1-content table tbody");
+corpoTabela.addEventListener("click", evento => {
+    if (evento.target.classlist.contains('btn-remover')) {
+        const id = evento.target.dataset.id;
+        removerProdutoDoCarrinho(id);
+
+    }
+
+})
+
+function removerProdutoDoCarrinho(id) {
+    const produtos = obterProdutosDoCarrinho();
+
+    // filtrar os produtos que não tem o id passado por parametro
+    const carrinhoAtualizado = produtos.filter(produto => produto.id !== id);
+
+    salvarProdutosNoCarrinho(carrinhoAtualizado);
+    atualizarContadorCarrinho();
+    renderizarTabelaCarrinho();
+}
