@@ -1,4 +1,4 @@
-/*
+tv/*
 Objetivo 1 - quando clicar no botão de adicionar ao carrinho:
     - atualizar o contador
     - adicionar o produto no localStorage
@@ -53,8 +53,7 @@ botoesAdicionarAoCarrinho.forEach(botao => {
         }
 
         salvarProdutosNoCarrinho(carrinho);
-        atualizarContadorCarrinho();
-        renderizarTabelaCarrinho();
+        atualizarCarrinhoETabela();
     });
 });
 
@@ -79,44 +78,71 @@ function atualizarContadorCarrinho() {
     document.getElementById("contador-carrinho").textContent = total;
 }
 
-atualizarContadorCarrinho();
-
 // passo 5 redenrizar a tabela do carrinho de compras
 function renderizarTabelaCarrinho() {
     const produtos = obterProdutosDoCarrinho();
     const corpoTabela = document.querySelector('#modal-1-content table tbody');
     if (!corpoTabela) return;
 
-    corpoTabela.innerHTML = '';
+    corpoTabela.innerHTML = ""; // limpar tabela antes de renderizar
 
-    produtos.forEach(item => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-      
-      ${item.nome}
-      R$ ${item.preco.toFixed(2).replace('.', ',')}
-      
-      R$ ${(item.preco * item.quantidade).toFixed(2).replace('.', ',')}
-      Deletar
-    `;
-        corpoTabela.appendChild(tr);
+    produtos.forEach(produto => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = ` <td class="td-produto">
+            <img
+                src="${produto.imagem}"
+                alt="${produto.nome}"
+            />
+        </td>
+        <td>${produto.nome}</td>
+        <td class="td-preco-unitario">R$ ${produto.preco.toFixed(2).replace(".", ",")}</td>
+        <td class="id-quantidade">
+        <input type="number" class="input-quantidade" data-id="${produto-id}"  value="${produto.quantidade}" min="1" />
+        </td>
+        <td class="td-preco-total">R$ ${(produto.preco * produto.quantidade).toFixed(2).replace(".", ",")}</td>
+        <td><button class="btn-remover" data-id="${produto.id}" id="deletar"></button></td> `;
+corpoTabela.appendChild(tr);
     });
+
 }
 
-renderizarTabelaCarrinho();
 
 // objetivo 2 - remover produtos do carrinho
-// passo 1 - pegar o botão de deletar do carrinho
+//    passo 1 - pegar o botão de deletar do carrinho
 const corpotabela = document.querySelector("#modal-1-content table tbody");
+
+// passo 2 adicionar evento de escuta no tbody
 corpoTabela.addEventListener("click", evento => {
-    if (evento.target.classlist.contains('btn-remover')) {
+    console.log("entrou aqui");
+    console.log(evento.target, classlist.contains("btn-remover"));
+
+    if (evento.target.classlist.contains("btn-remover")) {
         const id = evento.target.dataset.id;
+        //passo 3 - remover o evento do localStorage
         removerProdutoDoCarrinho(id);
 
     }
 
-})
+});
 
+// passo 1 - adicionar evento de escuta no input do tbody
+corpoTabela.addEventListener("input", evento => {
+    // passo - 2 atualizar o valor total do produto
+    if (evento.target.classlist.contains("input-quantidade")) {
+        const produtos = obterProdutosDoCarrinho();
+        const produto = produtos.find(produto => produto.id === evento.target.dataset.id);
+        let novaQuantidade = parseInt(evento.target.value);
+        if (produto){
+            produto.quantidade = novaQuantidade;  
+        }
+        salvarProdutosNoCarrinho(produtos);
+        atualizarCarrinhoETabela();
+    }
+});
+
+
+
+// passo 4 - atualizar o html do carrinho retirando o produto
 function removerProdutoDoCarrinho(id) {
     const produtos = obterProdutosDoCarrinho();
 
@@ -124,6 +150,26 @@ function removerProdutoDoCarrinho(id) {
     const carrinhoAtualizado = produtos.filter(produto => produto.id !== id);
 
     salvarProdutosNoCarrinho(carrinhoAtualizado);
+    atualizarCarrinhoETabela();
+}
+
+// passo 3 - atualizar o valor total do carrinho
+function atualizarValorTotalCarrinho() {
+    const produtos = obterProdutosDoCarrinho();
+    let total = 0;
+
+    produtos.forEach(produto => {
+        total += produto.preco * produto.quantidade;
+    });
+
+    document.querySelector("#total-carrinho").textContent = `R$ ${total.toFixed(2).replace(".", ",")}`;
+}
+
+function atualizarCarrinhoRTabela(){
     atualizarContadorCarrinho();
     renderizarTabelaCarrinho();
+    atualizarValorTotalCarrinho();
+
 }
+
+atualizarCarrinhoETabela();
